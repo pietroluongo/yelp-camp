@@ -4,6 +4,7 @@ const Campground = require('./models/Campground');
 const methodOverride = require('method-override');
 
 const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.tacau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     res.render('home');
