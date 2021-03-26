@@ -184,7 +184,7 @@ module.exports = {
         'object-curly-newline': 'error',
         'object-curly-spacing': [
             'error',
-            'never'
+            'always'
         ],
         'object-property-newline': 'error',
         'object-shorthand': 'error',
@@ -216,7 +216,7 @@ module.exports = {
         'require-await': 'error',
         'require-unicode-regexp': 'error',
         'rest-spread-spacing': 'error',
-        'semi': 'off',
+        'semi': 'error',
         'semi-spacing': 'error',
         'semi-style': [
             'error',
