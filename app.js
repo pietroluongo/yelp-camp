@@ -3,6 +3,7 @@ const path = require('path');
 const Campground = require('./models/Campground');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const Joi = require('joi');
 
 const catchAsync = require('./utils/catchAsync');
 const expressError = require('./utils/ExpressError');
@@ -56,8 +57,18 @@ app.get('/campgrounds/:id/edit', catchAsync(async(req, res) => {
 }));
 
 app.post('/campgrounds', catchAsync(async (req, res, next) => {
-    if(!req.body.campground) {
-        throw new ExpressError('Invalid Campground Data', 400);
+    const campgroundSchema = Joi.object({
+        campground: Joi.object({
+            title: Joi.string().required(),
+            price: Joi.number().required().min(0),
+            image: Joi.string().required(),
+            location: Joi.string().required(),
+            comment: Joi.string().required()
+        }).required()
+    });
+    const {error} = campgroundSchema.validate(req.body);
+    if(error) {
+        throw new ExpressError(error.details.map(elem => elem.message).join(','), 400);
     }
     const camp = new Campground(req.body.campground);
     await camp.save();
