@@ -51,7 +51,7 @@ app.get('/campgrounds', catchAsync(async(req, res) => {
     res.render('campgrounds/index', { campgrounds });
 }));
 
-app.get('/campgrounds/new', catchAsync(async(req, res) => {
+app.get('/campgrounds/new', catchAsync((req, res) => {
     res.render('campgrounds/new');
 }));
 
@@ -65,7 +65,7 @@ app.get('/campgrounds/:id/edit', catchAsync(async(req, res) => {
     res.render('campgrounds/edit', { campground });
 }));
 
-app.post('/campgrounds', validateCampground, catchAsync(async (req, res, next) => {
+app.post('/campgrounds', validateCampground, catchAsync(async (req, res) => {
 
     const camp = new Campground(req.body.campground);
     await camp.save();
