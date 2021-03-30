@@ -111,6 +111,7 @@ app.use((err, req, res, next) => {
         err.message = 'Something went wrong!';
     }
     res.render('error', { err });
+    next();
 });
 
 app.all('*', (req, res, next) => {

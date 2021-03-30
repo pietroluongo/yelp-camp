@@ -2,7 +2,7 @@
 
 
 <div class="row">
-    <div class="col-6 offset-3 mb-3">
+    <div class="col-6 mb-3">
       <div class="card">
         <img src="<%= campground.image  %> " class="card-img-top" alt="...">
         <div class="card-body">
@@ -23,8 +23,10 @@
         <div class="card-footer text-muted">
           2 days ago <a href="/campgrounds">All Campgrounds</a>
         </div>
+      </div>
+      <div class="col-6">
         <h2>Leave a review</h2>
-        <form class="validatedForm" action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3" novalidate>
+        <form class="validatedForm mb-3 " action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3" novalidate>
           <div class="mb-3">
             <label for="rating" class="form-label">Rating</label>
             <input type="range" min="1" max="5" name="review[rating]" id="rating" class="form-range" />
@@ -38,11 +40,13 @@
           </div>
           <button class="btn btn-success">Submit</button>
         </form>
-        <% for (let review of campground.reviews) { %> 
-        <div class="mb-3">
-          <div class="p">Rating: <%= review.rating %> </div>
-          <div class="p">Review: <%= review.body %> </div>
-        </div>
+        <% for (let review of campground.reviews) { %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Rating: <%= review.rating %></h5>
+              <p class="card-text">Review: <%= review.body %></p>
+            </div>
+          </div>
         <% } %> 
-    </div>
+      </div>
 </div>
