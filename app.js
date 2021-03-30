@@ -7,11 +7,16 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
 const morgan = require('morgan');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 const ExpressError = require('./utils/ExpressError');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const campgroundsRoutes = require('./routes/campgrounds');
+const reviewsRoutes = require('./routes/reviews');
+const usersRoutes = require('./routes/users');
+
+const User = require('./models/User');
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.tacau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -50,6 +55,15 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig));
 
+
+// Auth
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Flash middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
@@ -57,9 +71,16 @@ app.use((req, res, next) => {
     next();
 });
 
+// app.get('/fakeuser', async(req, res) => {
+//     const user = new User({email: 'test@google.com', username: 'testtttt'});
+//     await User.register(user, 'password_nuggets');
+//     res.send(user);
+// });
+
 // Routes
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/campgrounds', campgroundsRoutes);
+app.use('/campgrounds/:id/reviews', reviewsRoutes);
+app.use('/', usersRoutes);
 app.get('/', (req, res) => {
     res.render('home');
 });
