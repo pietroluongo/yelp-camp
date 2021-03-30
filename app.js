@@ -104,7 +104,7 @@ app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
 }));
 
 // Error handling
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     res.status(statusCode);
     if (!err.message) {
