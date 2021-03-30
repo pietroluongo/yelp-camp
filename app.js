@@ -110,6 +110,10 @@ app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => 
     res.redirect(`/campgrounds/${id}/`);
 }));
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Not Found', 404));
+});
+
 // Error handling
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
@@ -119,10 +123,6 @@ app.use((err, req, res, next) => {
     }
     res.render('error', { err });
     next();
-});
-
-app.all('*', (req, res, next) => {
-    next(new ExpressError('Not Found', 404));
 });
 
 app.listen(3000, () => {

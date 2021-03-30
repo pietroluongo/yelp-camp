@@ -105,3 +105,6 @@ dist
 
 # Sensitive Data
 env.sh
+
+# IDE Settings
+.idea
