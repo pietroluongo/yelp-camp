@@ -24,14 +24,17 @@
           2 days ago <a href="/campgrounds">All Campgrounds</a>
         </div>
         <h2>Leave a review</h2>
-        <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3">
+        <form class="validatedForm" action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3" novalidate>
           <div class="mb-3">
             <label for="rating" class="form-label">Rating</label>
             <input type="range" min="1" max="5" name="review[rating]" id="rating" class="form-range" />
           </div>
           <div class="mb-3">
             <label class="form-label" for="body">Review</label>
-            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"></textarea>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
           </div>
           <button class="btn btn-success">Submit</button>
         </form>

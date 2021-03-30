@@ -10,7 +10,7 @@ const morgan = require('morgan');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 
-const { campgroundSchema } = require('./schemas');
+const { campgroundSchema, reviewSchema } = require('./schemas');
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.tacau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -36,6 +36,15 @@ app.use(morgan('dev'));
 // Validation middleware
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
+    if (error) {
+        throw new ExpressError(error.details.map((elem) => elem.message).join(','), 400);
+    } else {
+        next();
+    }
+};
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
     if (error) {
         throw new ExpressError(error.details.map((elem) => elem.message).join(','), 400);
     } else {
@@ -85,7 +94,7 @@ app.delete('/campgrounds/:id', catchAsync(async(req, res) => {
     res.redirect('/campgrounds');
 }));
 
-app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
+app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res) => {
     const camp = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
     camp.reviews.push(review);
@@ -93,10 +102,6 @@ app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
     await camp.save();
     res.redirect(`/campgrounds/${camp._id}`);
 }));
-
-app.all('*', (req, res, next) => {
-    next(new ExpressError('Not Found', 404));
-});
 
 // Error handling
 app.use((err, req, res) => {
@@ -106,6 +111,10 @@ app.use((err, req, res) => {
         err.message = 'Something went wrong!';
     }
     res.render('error', { err });
+});
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Not Found', 404));
 });
 
 app.listen(3000, () => {
