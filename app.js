@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
+
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const morgan = require('morgan');
 
 const ExpressError = require('./utils/ExpressError');
@@ -16,7 +18,6 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
     useUnifiedTopology: true,
     useFindAndModify: false
 });
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 db.once('open', () => {
@@ -25,13 +26,28 @@ db.once('open', () => {
 
 const app = express();
 
+// App setup
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Session setup
+const sessionConfig = {
+    secret: 'changeme',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(sessionConfig ));
+
 
 // Routes
 app.use('/campgrounds', campgrounds);
