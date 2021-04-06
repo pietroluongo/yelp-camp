@@ -21,9 +21,7 @@ router.get('/', catchAsync(async(req, res) => {
     res.render('campgrounds/index', { campgrounds });
 }));
 
-router.get('/new', isLoggedIn, catchAsync((req, res) => {
-    res.render('campgrounds/new');
-}));
+router.get('/new', isLoggedIn, catchAsync((req, res) => res.render('campgrounds/new')));
 
 router.get('/:id', catchAsync(async(req, res) => {
     const campground = await Campground.findById(req.params.id).populate('reviews');
