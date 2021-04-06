@@ -80,7 +80,6 @@ app.use('/campgrounds', campgroundsRoutes);
 app.use('/campgrounds/:id/reviews', reviewsRoutes);
 app.use('/', usersRoutes);
 
-
 app.all('*', (req, res, next) => {
     next(new ExpressError('Not Found', 404));
 });
