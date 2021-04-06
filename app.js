@@ -68,16 +68,18 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currentUser = req.user;
     next();
 });
 
 // Routes
-app.use('/campgrounds', campgroundsRoutes);
-app.use('/campgrounds/:id/reviews', reviewsRoutes);
-app.use('/', usersRoutes);
 app.get('/', (req, res) => {
     res.render('home');
 });
+app.use('/campgrounds', campgroundsRoutes);
+app.use('/campgrounds/:id/reviews', reviewsRoutes);
+app.use('/', usersRoutes);
+
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Not Found', 404));
