@@ -12,12 +12,17 @@ const {
     updateCampground
 } = require('../controllers/campgrounds');
 
-router.get('/', catchAsync(index));
 router.get('/new', isLoggedIn, renderNewForm);
-router.get('/:id', catchAsync(showCampground));
+
+router.route('/')
+    .get(catchAsync(index))
+    .post(isLoggedIn, validateCampground, catchAsync(createCampground));
+
+router.route('/:id')
+    .get(catchAsync(showCampground))
+    .put(isLoggedIn, isAuthor, validateCampground, catchAsync(updateCampground))
+    .delete(isLoggedIn, isAuthor, catchAsync(deleteCampground));
+
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(renderEditForm));
-router.post('/', isLoggedIn, validateCampground, catchAsync(createCampground));
-router.put('/:id', isLoggedIn, isAuthor, validateCampground, catchAsync(updateCampground));
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(deleteCampground));
 
 module.exports = router;

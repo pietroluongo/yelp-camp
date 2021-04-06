@@ -9,23 +9,22 @@ const {
     renderLoginForm,
     login,
     logout
-} = require('../models/User');
+} = require('../controllers/users');
 
 router.get('/', index);
 
-router.get('/register', renderRegisterForm);
+router.route('/register')
+    .get(renderRegisterForm)
+    .post(catchAsync(register));
 
-router.post('/register', catchAsync(register));
-
-router.get('/login', renderLoginForm);
-
-router.post(
-    '/login',
-    passport.authenticate('local', {
-        failureFlash: true,
-        failureRedirect: '/login' }),
-    login
-);
+router.route('/login')
+    .get(renderLoginForm)
+    .post(
+        passport.authenticate('local', {
+            failureFlash: true,
+            failureRedirect: '/login' }),
+        login
+    );
 
 router.get('/logout', logout);
 
