@@ -6,9 +6,7 @@ module.exports = {
         'node': true
     },
     'extends': 'eslint:recommended',
-    'parserOptions': {
-        'ecmaVersion': 12
-    },
+    'parserOptions': { 'ecmaVersion': 12 },
     'rules': {
         'accessor-pairs': 'error',
         'array-bracket-newline': 'error',
@@ -19,10 +17,8 @@ module.exports = {
         'arrow-parens': 'error',
         'arrow-spacing': [
             'error',
-            {
-                'after': true,
-                'before': true
-            }
+            { 'after': true,
+                'before': true }
         ],
         'block-scoped-var': 'error',
         'block-spacing': 'error',
@@ -33,10 +29,8 @@ module.exports = {
         'comma-dangle': 'error',
         'comma-spacing': [
             'error',
-            {
-                'after': true,
-                'before': false
-            }
+            { 'after': true,
+                'before': false }
         ],
         'comma-style': [
             'error',
@@ -184,7 +178,7 @@ module.exports = {
         'no-warning-comments': 'error',
         'no-whitespace-before-property': 'error',
         'nonblock-statement-body-position': 'error',
-        'object-curly-newline': 'error',
+        'object-curly-newline': 'off',
         'object-curly-spacing': [
             'error',
             'always'

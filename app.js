@@ -52,7 +52,7 @@ const sessionConfig = {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
-}
+};
 app.use(session(sessionConfig));
 
 
@@ -70,12 +70,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     next();
 });
-
-// app.get('/fakeuser', async(req, res) => {
-//     const user = new User({email: 'test@google.com', username: 'testtttt'});
-//     await User.register(user, 'password_nuggets');
-//     res.send(user);
-// });
 
 // Routes
 app.use('/campgrounds', campgroundsRoutes);
