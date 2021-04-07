@@ -15,11 +15,6 @@
                 <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="image">Image URL</label>
-                <input type="file" id="image" name="image" multiple>
-                <div class="valid-feedback">Looks good!</div>
-            </div>
-            <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
                 <textarea class="form-control" type="text" required name="campground[description]" id="description"></textarea>
                 <div class="valid-feedback">Looks good!</div>
@@ -32,7 +27,11 @@
                     <div class="valid-feedback">Looks good!</div>
                 </div>
             </div>
-
+            <div class="mb-3">
+                <label for="formImage" class="form-label">Add Campground Images</label>
+                <input name="image" class="form-control" type="file" id="formImage" multiple>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
             <div class="mb-3">
             <button class="btn btn-success">Add campground</button>
 

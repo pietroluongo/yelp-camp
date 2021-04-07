@@ -8,23 +8,16 @@
                 <label class="form-label" for="title">Title</label>
                 <input required class="form-control" type="text" name="campground[title]" id="title" value="<%= campground.title %>" />
                 <div class="valid-feedback">Looks good!</div>
-                
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Location</label>
                 <input required class="form-control" type="text" name="campground[location]" id="location" value="<%= campground.location %>" />
                 <div class="valid-feedback">Looks good!</div>
-                
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="image">Add Images</label>
-                <input type="file" name="image" id="image" multiple>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
                 <textarea class="form-control" required type="text" name="campground[description]" id="description"><%= campground.description %></textarea>
                 <div class="valid-feedback">Looks good!</div>
-                
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
@@ -32,16 +25,17 @@
                     <span class="input-group-text" id="price-label">$</span>
                     <input required type="text" class="form-control" name="campground[price]" id="price" placeholder="0.00" aria-label="Price" aria-describedby="price-label" value="<%= campground.price %>">
                     <div class="valid-feedback">Looks good!</div>
-                    
                 </div>
             </div>
-
             <div class="mb-3">
+            <div class="mb-3">
+                <label for="formImage" class="form-label">Add more campground images</label>
+                <input name="image" class="form-control" type="file" id="formImage" multiple>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
             <button class="btn btn-info">Update campground</button>
-
             </div>
             <a href="/campgrounds/<%= campground._id %>">Back to Campground</a>
         </form>
-        
     </div>
 </div>
