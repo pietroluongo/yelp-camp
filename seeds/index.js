@@ -43,8 +43,8 @@ const seedDB = async() => {
             price: Math.floor(Math.random() * 1000),
             author: '606c3ca0497e9211208aabf2',
             geometry: { coordinates: [
-                -46.660603,
-                -23.555376
+                cities[rand1k].longitude,
+                cities[rand1k].latitude
             ],
             type: 'Point' }
         });
