@@ -9,7 +9,7 @@ const {
     index,
     renderNewForm,
     showCampground,
-    // CreateCampground,
+    createCampground,
     renderEditForm,
     deleteCampground,
     updateCampground
@@ -19,10 +19,7 @@ router.get('/new', isLoggedIn, renderNewForm);
 
 router.route('/')
     .get(catchAsync(index))
-    // .post(isLoggedIn, validateCampground, catchAsync(createCampground));
-    .post(upload.single('image'), (req, res) => {
-        res.send(req.body, req.file);
-    });
+    .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(createCampground));
 
 router.route('/:id')
     .get(catchAsync(showCampground))

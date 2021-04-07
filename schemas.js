@@ -10,8 +10,8 @@ module.exports.campgroundSchema = Joi.object({
             .required()
             .min(0),
         image: Joi
-            .string()
-            .required(),
+            .string(),
+        // .required(),
         location: Joi
             .string()
             .required(),
