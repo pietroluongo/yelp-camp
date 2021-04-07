@@ -24,7 +24,7 @@ const getRandomizedItemFromArray = (arr) => arr[Math.floor(Math.random() * arr.l
 
 const seedDB = async() => {
     await Campground.deleteMany({});
-    for (let it = 0; it < 50; it += 1) {
+    for (let it = 0; it < 10; it += 1) {
         const rand1k = Math.floor(Math.random() * 1000);
         const camp = new Campground({
             location: `${cities[rand1k].city}, ${cities[rand1k].state}`,
@@ -41,7 +41,12 @@ const seedDB = async() => {
             ],
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             price: Math.floor(Math.random() * 1000),
-            author: '606c3ca0497e9211208aabf2'
+            author: '606c3ca0497e9211208aabf2',
+            geometry: { coordinates: [
+                -46.660603,
+                -23.555376
+            ],
+            type: 'Point' }
         });
         await camp.save();
     }
