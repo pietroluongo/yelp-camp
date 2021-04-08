@@ -13,6 +13,7 @@ const flash = require('connect-flash');
 const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const ExpressError = require('./utils/ExpressError');
 
@@ -45,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(flash());
+app.use(mongoSanitize());
 
 // Session setup
 const sessionConfig = {
