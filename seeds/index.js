@@ -31,17 +31,13 @@ const seedDB = async() => {
             title: `${getRandomizedItemFromArray(descriptors)} ${getRandomizedItemFromArray(places)}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dq6kbbbza/image/upload/v1617796268/YelpCamp/wv9ouza71vkjmzhmtyl9.png',
-                    filename: 'YelpCamp/wv9ouza71vkjmzhmtyl9'
-                },
-                {
-                    url: 'https://res.cloudinary.com/dq6kbbbza/image/upload/v1617796268/YelpCamp/jovlaoxs4dpzm9vmcihy.png',
-                    filename: 'YelpCamp/jovlaoxs4dpzm9vmcihy'
+                    url: 'https://res.cloudinary.com/dq6kbbbza/image/upload/v1617893996/YelpCamp/y9DpT_jghr03.jpg',
+                    filename: 'YelpCamp/y9DpT_jghr03'
                 }
             ],
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            description: 'No description provided',
             price: Math.floor(Math.random() * 1000),
-            author: '606c3ca0497e9211208aabf2',
+            author: '606f1af973dd930015b3f94a',
             geometry: { coordinates: [
                 cities[rand1k].longitude,
                 cities[rand1k].latitude
