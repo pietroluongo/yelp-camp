@@ -64,11 +64,11 @@ map.on('load', () => {
                     'get',
                     'point_count'
                 ],
-                15,
-                10,
                 20,
+                10,
+                25,
                 30,
-                25
+                30
             ]
         }
     });
@@ -139,14 +139,7 @@ map.on('load', () => {
      */
     map.on('click', 'unclustered-point', (e) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
-        const { mag } = e.features[0].properties;
-        let tsunami;
-
-        if (e.features[0].properties.tsunami === 1) {
-            tsunami = 'yes';
-        } else {
-            tsunami = 'no';
-        }
+        console.log(e.features[0]);
 
         /*
          * Ensure that if the map is zoomed out such that
@@ -161,7 +154,7 @@ map.on('load', () => {
 
         new mapboxgl.Popup()
             .setLngLat(coordinates)
-            .setHTML(`magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`)
+            .setHTML(e.features[0].properties.popUpMarkup)
             .addTo(map);
     });
 
