@@ -14,6 +14,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 const ExpressError = require('./utils/ExpressError');
 
@@ -47,6 +48,9 @@ app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(flash());
 app.use(mongoSanitize());
+app.use(helmet({
+    contentSecurityPolicy: false
+}));
 
 // Session setup
 const sessionConfig = {
