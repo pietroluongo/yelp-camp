@@ -1,5 +1,5 @@
 {
-  "name": "YelpCamp",
+  "name": "yelpcamp",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -27,6 +27,6 @@
     "sanitize-html": "^2.3.3"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   }
 }
