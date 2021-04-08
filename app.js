@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
@@ -15,6 +15,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const { scriptSrcUrls, connectSrcUrls, styleSrcUrls, fontSrcUrls } = require('./trustedSources');
 
 const ExpressError = require('./utils/ExpressError');
 
@@ -30,6 +31,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
     useUnifiedTopology: true,
     useFindAndModify: false
 });
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 db.once('open', () => {
@@ -48,8 +50,41 @@ app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(flash());
 app.use(mongoSanitize());
-app.use(helmet({
-    contentSecurityPolicy: false
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: [],
+        connectSrc: [
+            '\'self\'',
+            ...connectSrcUrls
+        ],
+        scriptSrc: [
+            '\'unsafe-inline\'',
+            '\'self\'',
+            ...scriptSrcUrls
+        ],
+        styleSrc: [
+            '\'self\'',
+            '\'unsafe-inline\'',
+            ...styleSrcUrls
+        ],
+        workerSrc: [
+            '\'self\'',
+            'blob:'
+        ],
+        objectSrc: [],
+        imgSrc: [
+            '\'self\'',
+            'blob:',
+            'data:',
+            'https://res.cloudinary.com/dq6kbbbza/',
+            'https://images.unsplash.com/'
+        ],
+        fontSrc: [
+            '\'self\'',
+            ...fontSrcUrls
+        ]
+    }
 }));
 
 // Session setup
