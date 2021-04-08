@@ -16,6 +16,7 @@ const LocalStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const { scriptSrcUrls, connectSrcUrls, styleSrcUrls, fontSrcUrls } = require('./trustedSources');
+const MongoDBStore = require('connect-mongo');
 
 const ExpressError = require('./utils/ExpressError');
 
@@ -25,7 +26,9 @@ const usersRoutes = require('./routes/users');
 
 const User = require('./models/User');
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.tacau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
+const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.tacau.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
+mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -87,9 +90,18 @@ app.use(helmet.contentSecurityPolicy({
     }
 }));
 
+const store = new MongoDBStore({
+    mongoUrl: mongoUrl,
+    secret: process.env.MONGO_SECRET,
+    touchAfter: 24 * 60 * 60
+});
+
+store.on('error', e => console.log('SESSION STORE ERROR', e));
+
 // Session setup
 const sessionConfig = {
-    secret: 'changeme',
+    store: store,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
